@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BookController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/produtos/novo', 'ProdutosController@create');
-Route::post('/produtos/novo', 'ProdutosController@store')->name('registrar_produto');
-Route::get('/produto/ver/{id}', 'ProdutosController@show');
-Route::get('/produto/editar/{id}', 'ProdutosController@edit');
-Route::post('/produto/editar/{id}', 'ProdutosController@update')->name('alterar_produto');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::post('/post/create',[BookController::class,'store'])->middleware(['auth'])->name('create_book');
+
+require __DIR__.'/auth.php';
